@@ -8,7 +8,7 @@ module Tournakit
 		#
 		# file:: a +String+ containing a path to a workbook with many sheets, each of which contains a round of mACF quizbowl
 		# return:: an +Array+ of n Game objects
-		def self.parse_room(file)
+		def self.parse_rounds(file)
 			ss = self.new(file)
 			ss.rounds.map {|round| ss.parse(round) }
 		end

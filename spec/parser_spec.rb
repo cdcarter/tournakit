@@ -21,3 +21,15 @@ describe Tournakit::LilyChenParser, "#parse" do
 		result.teams[0].should eq "Fenton"
 	end
 end
+
+describe Tournakit::LilyChenParser, "::parse_rounds" do
+	it "should parse every worksheet in the file" do
+		games = Tournakit::LilyChenParser.parse_rounds("data/Czupryn.xls")
+		games.length.should eq 10
+	end
+	it "should be able to handle the whole data set" do
+		all_games = Dir["data/*.xls"].map {|file| Tournakit::LilyChenParser.parse_rounds(file) }
+		all_games.length.should eq 12
+		all_games[5].length.should eq 10
+	end
+end
