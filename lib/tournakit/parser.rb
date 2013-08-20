@@ -1,8 +1,4 @@
 module Tournakit
-	class Game
-		attr_accessor :event, :round, :moderator, :room, :teams, :players, :score, :tossups
-	end
-
 	class LilyChenParser
 		def initialize(file)
 			@spreadsheet = ::Roo::Excel.new(file)
