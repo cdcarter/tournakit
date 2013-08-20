@@ -1,9 +1,35 @@
 module Tournakit
 	class LilyChenParser
+
+		# a +String+ containing a path to an +.xls+ workbook
+		attr_accessor :file
+
+		# Parse an entire Excel workbook into Game objects.
+		#
+		# file:: a +String+ containing a path to a workbook with many sheets, each of which contains a round of mACF quizbowl
+		# return:: an +Array+ of n Game objects
+		def self.parse_room(file)
+			ss = self.new(file)
+			ss.rounds.map {|round| ss.parse(round) }
+		end
+
+		# Create a new parser object
 		def initialize(file)
+			@file = file
 			@spreadsheet = ::Roo::Excel.new(file)
 		end
 
+		# Returns a list of the names of the sheets in the workbook, which are assumed to be round labels.
+		#
+		# return:: +Array+
+		def rounds
+			@spreadsheet.sheets
+		end
+
+		# Parses a LilyChen Scoresheet into a Game object.
+		#
+		# round:: a +String+ with the name of the sheet to be parsed, or an +Integer+ with the index of that round
+		# return:: a Game object of that round
 		def parse(round="01")
 			sheet = @spreadsheet.sheet(round)
 			game = Game.new 
@@ -18,6 +44,7 @@ module Tournakit
 			return game
 		end
 
+		private
 		def parse_players(sheet)
 			team_a = (2..6).map {|col| sheet.cell(4,col)}
 			team_b = (11..15).map {|col| sheet.cell(4,col)}
