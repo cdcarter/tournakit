@@ -47,14 +47,47 @@ module Tournakit
 			game.teams = obj["teams"]
 			game.players = obj["players"]
 			game.score = obj["score"]
-			game.tossups = obj["tossups"]
+			game.tossups = obj["tossups"].map {|h| {:buzzes => h["buzzes"], :bpts => h["bpts"]}}
+			return game
 		end
+
 
 		# Serializes the +Game+ to JSON for storage or wire transfer
 		#
 		# return:: +String+ of JSON
 		def to_json
-			
+			JSON.generate(to_hash)
+		end
+
+		# Calculate the Bonus Question statistics for each team.
+		#
+		# Note: this function handles bouncebacks by counting bonus points earned on all tossups, but does not consider bounced back bonuses as heard.
+		# I do not remember what the generally accepted method of calculating PPB in a bounceback situation is. So right now, there is no modification, it is purely bpts/bhrd.
+		#
+		# return:: +Array+ of two +Hash+es with the follwing keys:
+		# hrd:: +Integer+ of bonuses heard by the team
+		# pts:: +Integer+ of points earned on bonuses by the team
+		# ppb:: a +Float+ of the points per bonus for the team
+		def bonus_stats
+			stats = [{hrd:0, pts:0}, {hrd:0, pts:0}]
+			self.tossups.each {|tossup|
+				tossup[:buzzes].each_with_index {|buzzline,team|
+					stats[team][:hrd] += 1 if buzzline.any? {|buzz| buzz > 0}
+				}
+				tossup[:bpts].each_with_index {|pts, team|
+					stats[team][:pts] += pts
+				}
+			}
+			stats.each {|h|
+				h[:ppb] = h[:pts].to_f/h[:hrd].to_f
+			}
+			return stats
+		end
+
+		private
+		# return:: a +Hash+ containing all game information
+		def to_hash
+			{:event => event, :round => round, :moderator => moderator, :room => room, :teams => teams, :players => players, :score => score, :tossups => tossups}
 		end
 	end
 end
