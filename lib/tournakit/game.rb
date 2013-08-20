@@ -49,5 +49,12 @@ module Tournakit
 			game.score = obj["score"]
 			game.tossups = obj["tossups"]
 		end
+
+		# Serializes the +Game+ to JSON for storage or wire transfer
+		#
+		# return:: +String+ of JSON
+		def to_json
+			
+		end
 	end
 end
