@@ -31,14 +31,8 @@ module Tournakit
 		# for a tossup where the fourth player on team A got 10 pts, and the third player on team B got -5.
 		attr_accessor :tossups
 
-		# Converts a JSON Game into a Ruby Game. This currently does not handle errors well.
-		#
-		# TODO: make sure json is well formed.
-		#
-		# json:: +String+ of JSON containing a game
-		# return:: +Game+ object
-		def self.parse(json)
-			obj = JSON.parse(json)
+		# :nodoc:
+		def self.json_create(obj)
 			game = self.new
 			game.event = obj["event"]
 			game.round = obj["round"]
@@ -51,12 +45,21 @@ module Tournakit
 			return game
 		end
 
+		# Converts a JSON Game into a Ruby Game. This currently does not handle errors well.
+		#
+		# TODO: make sure json is well formed.
+		#
+		# json:: +String+ of JSON containing a game
+		# return:: +Game+ object
+		def self.parse(json)
+			return self.json_create(JSON.parse(json))
+		end
 
 		# Serializes the +Game+ to JSON for storage or wire transfer
 		#
 		# return:: +String+ of JSON
-		def to_json
-			JSON.generate(to_hash)
+		def to_json(*a)
+			to_hash.to_json(*a)
 		end
 
 		# Calculate the Bonus Question statistics for each team.
@@ -87,7 +90,7 @@ module Tournakit
 		private
 		# return:: a +Hash+ containing all game information
 		def to_hash
-			{:event => event, :round => round, :moderator => moderator, :room => room, :teams => teams, :players => players, :score => score, :tossups => tossups}
+			{:event => event, :round => round, :moderator => moderator, :room => room, :teams => teams, :players => players, :score => score, :tossups => tossups, JSON.create_id => self.class.name}
 		end
 	end
 end
