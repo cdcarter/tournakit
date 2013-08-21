@@ -35,7 +35,17 @@ class Tournakit::Collection
 	# @param newname [String] the name to be changed to
 	# @return [Integer] the number of +Game+s where that player name was changed
 	def rename_player(team, oldname, newname)
-		
+		counter = 0
+		@rounds.map! do |game|
+			if team_idx = game.teams.index(team)
+				if player = game.players[team_idx].index(oldname)
+					game.players[team_idx][player] = newname
+					counter += 1
+				end
+			end
+			game
+		end
+		return counter
 	end
 
 	# Renames a team in all Game objects that it was in
