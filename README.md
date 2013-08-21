@@ -1,6 +1,6 @@
 # Tournakit
 
-`Tournakit` is protocol for describing results of mACF quizbowl games, as well as the reference implementation in Ruby. As an added bonus it comes with a parser for Lily Chen's wonderful Excel scoresheets [1].
+`Tournakit` is protocol for describing results of mACF quizbowl games, as well as the reference implementation in Ruby. As an added bonus it comes with a parser for Lily Chen's wonderful [Excel scoresheets][1].
 
 A `Game` is pretty accurately described in [schema.json]("https://github.com/cdcarter/tournakit/tree/master/schema.json"). 
 
