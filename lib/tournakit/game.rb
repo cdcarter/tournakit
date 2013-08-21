@@ -31,10 +31,10 @@ module Tournakit
 		# for a tossup where the fourth player on team A got 10 pts, and the third player on team B got -5.
 		attr_accessor :tossups
 
-		# [Array<Hash,Hash>] with keys
-		#   * :+hrd+ [Integer] of bonuses heard by the team
-		#   * :+pts+ [Integer] of points earned on bonuses by the team
-		#   * :+ppb+ [Float] of the points per bonus for the team
+		# [Array] +Hash,Hash+ with keys
+		# :hrd:: [Integer] of bonuses heard by the team
+		# :pts:: [Integer] of points earned on bonuses by the team
+		# :ppb:: [Float] of the points per bonus for the team
 		attr_accessor :bonus_stats
 
 		attr_accessor :stat_lines
@@ -54,6 +54,7 @@ module Tournakit
 			game.score = obj["score"]
 			game.tossups = obj["tossups"].map {|h| {:buzzes => h["buzzes"], :bpts => h["bpts"]}}
 			game.bonus_stats = obj["bonus_stats"].map {|h| {:hrd => h["hrd"], :pts => h["pts"], :ppb => h["ppb"]}}
+			game.stat_lines = obj["stat_lines"].map {|team| team.map {|h| {:tens => h["tens"], :powers => h["powers"], :negs => h["negs"], :points => h["points"]}  }}
 			return game
 		end
 
@@ -74,26 +75,10 @@ module Tournakit
 			to_hash.to_json(*a)
 		end
 
-		# @overload stat_line(team_idx,player_idx)
-		#   Returns the statline for a player by index.
-		#   @param team_idx [Integer] +0+ or +1+, indicating which of the two teams in the round the player is on
-		#   @param player_idx [Integer] index of the player, as in the order they are in the +@players+ array
-		# @overload stat_line(name)
-		#   Returns the statline for a player given their name.
-		#   @param name [String] the name of a player in the round.
-		# 
-		# @return [Hash] of the statline
-		#  * +:tens+ [Integer] of tens earned
-		#  * +:powers+ [Integer] of powers earned
-		#  * +:negs+ [Integer] of negs racked up
-		#  * +:points+ [Integer] of total points scored by player
-		def stat_line(*args)
-		end
-
 		private
 		# @return [Hash] containing all game information
 		def to_hash
-			{:event => event, :round => round, :moderator => moderator, :room => room, :teams => teams, :players => players, :score => score, :bonus_stats => bonus_stats, :tossups => tossups, JSON.create_id => self.class.name}
+			{:event => event, :round => round, :moderator => moderator, :room => room, :teams => teams, :players => players, :score => score, :bonus_stats => bonus_stats, :stat_lines => stat_lines, :tossups => tossups, JSON.create_id => self.class.name}
 		end
 	end
 end

@@ -41,8 +41,7 @@ module Tournakit
 			game.players = parse_players(sheet)
 			game.score = [sheet.cell("B",26).to_i,sheet.cell("K",26).to_i]
 			game.tossups = parse_tossups(sheet)
-			game.stat_lines = parse_stat_lines(sheet)
-			game.bonus_stats = parse_bonus_stats(sheet,game)
+			game.bonus_stats, game.stat_lines = parse_stats(sheet,game)
 			return game
 		end
 
@@ -51,18 +50,35 @@ module Tournakit
 			
 		end
 
-		def parse_bonus_stats(sheet,game)
-			stats = [{pts: sheet.cell("G",33).to_i, ppb: sheet.cell("B",34), hrd:0 },
+		def parse_stats(sheet,game)
+			bonus_stats = [{pts: sheet.cell("G",33).to_i, ppb: sheet.cell("B",34), hrd:0 },
 							 {pts: sheet.cell("P",33).to_i, ppb: sheet.cell("K",34), hrd:0 }]
+			stat_lines = [Array.new(game.players[0].size) { {tens: 0, powers: 0, points:0, negs:0}}, Array.new(game.players[1].size){ {tens: 0, powers: 0, points:0, negs:0}}]
 			game.tossups.each {|tossup|
 				tossup[:buzzes].each_with_index {|buzzline,team|
-					stats[team][:hrd] += 1 if buzzline.any? {|buzz| buzz > 0}
+					buzzline.each_with_index { |buzz,player|
+						# if any player scored on this TU, then that team heard a bonus.
+						if buzz > 0
+							bonus_stats[team][:hrd] += 1
+						end
+						case buzz
+						when 10
+							stat_lines[team][player][:tens] += 1
+							stat_lines[team][player][:points] += 10
+						when 15
+							stat_lines[team][player][:powers] += 1
+							stat_lines[team][player][:points] += 15
+						when -5
+							stat_lines[team][player][:negs] += 1
+							stat_lines[team][player][:points] -= 5
+						end
+					}
 				}
 				tossup[:bpts].each_with_index {|pts, team|
-					stats[team][:pts] += pts
+					bonus_stats[team][:pts] += pts
 				}
 			}
-			return stats
+			return [bonus_stats, stat_lines]
 		end
 
 		def parse_players(sheet)

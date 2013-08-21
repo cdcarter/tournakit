@@ -24,15 +24,10 @@ describe Tournakit::Game do
 		end
 	end
 
-	describe "#stat_line" do
-		let(:royline)  { {:tens => 7, :negs => 1, :powers => 0, :points => 65} }
+	describe "#stat_lines" do
 		let(:zachline) { {:tens => 4, :negs => 0, :powers => 0, :points => 40}}
-		it "gives the stat line for a player by name" do
-			expect(game.stat_line("Roy Slick")).to eq royline
-		end
-
 		it "gives the stat line for a player by index" do
-			expect(game.stat_line(1,2)).to eq zachline
+			expect(game.stat_lines[1][2]).to eq zachline
 		end
 	end
 end
