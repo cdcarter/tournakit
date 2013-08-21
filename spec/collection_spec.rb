@@ -1,6 +1,8 @@
 require 'spec_helper'
 describe Tournakit::Collection do
 	let(:collection) { Tournakit::Collection.new(JSON.load(File.read("data/Czupryn.json"))) }
+	let(:loyola) {["Rosie Frehe", "Joe Birk", "Zachary Hayes", "Mark Brederman", nil, "Joe", "Mark", "Rosie", "Zachary"] }
+
 
 	it "is enumberable" do
 		expect(collection).to respond_to(:each)
@@ -9,10 +11,26 @@ describe Tournakit::Collection do
 	end
 
 	describe "#players" do
-		let(:loyola) {["Rosie Frehe", "Joe Birk", "Zachary Hayes", "Mark Brederman", nil, "Joe", "Mark", "Rosie", "Zachary"] }
 		it "returns the names of all the players on a team" do
 			players = collection.players("Loyola C")
 			expect(players).to eq(loyola)
+		end
+	end
+
+	describe "#rename_player" do
+		it "renames a player on a team" do
+			result = collection.rename_player("Loyola C","Rosie", "Rosie Frehe")
+			expect(result).to be > 0
+			expect(collection.players("Loyola C")).to have(loyola.size-1).players
+		end
+
+		it "returns how many players it renamed" do
+			result = collection.rename_player("Loyola C","Rosie", "Rosie Frehe")
+			expect(result).to eq 1
+		end
+
+		it "returns 0 when no players with the old name were there" do
+			result = collection.rename_player("Loyola C","Marky Mark", "Mark Whalberg")
 		end
 	end
 

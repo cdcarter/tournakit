@@ -29,6 +29,15 @@ class Tournakit::Collection
 		@rounds.select{|g| g.teams.include?(team)}.map {|g| g.players[g.teams.index(team)]}.flatten.uniq
 	end
 
+	# Rename a player in all the Game objects that that player exists.
+	# @param team [String] the team the player is on
+	# @param oldname [String] the player name to be changed
+	# @param newname [String] the name to be changed to
+	# @return [Integer] the number of +Game+s where that player name was changed
+	def rename_player(team, oldname, newname)
+		
+	end
+
 	# Renames a team in all Game objects that it was in
 	# @param oldname [String] the team name to be changed
 	# @param newname [String] the name to change to
