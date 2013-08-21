@@ -1,15 +1,27 @@
 require 'spec_helper'
 
-describe Tournakit::Game, "::parse" do
+describe Tournakit::Game do
 	let(:game) { Tournakit::Game.parse(File.read("data/SingleRound.json")) }
-	it "parses a single game" do
-		expect(game).to be_instance_of Tournakit::Game
-		expect(game.teams[0]).to eq "Byron"
-	end
-end
 
-describe Tournakit::Game, "#bonus_stats" do
-	it "calculates ppb for both teams" do
+	describe "::parse" do
+		it "parses a single game" do
+			expect(game).to be_instance_of Tournakit::Game
+			expect(game.teams[0]).to eq "Byron"
+		end
+	end
+
+	describe Tournakit::Game, "#bonus_stats" do
+		it "calculates ppb for both teams" do
+			expect(game.bonus_stats[0][:ppb]).to be_instance_of Float
+			expect(game.bonus_stats[0][:ppb]).to be_within(0.5).of(7.14)
+			expect(game.bonus_stats[1][:ppb]).to be_instance_of Float
+			expect(game.bonus_stats[1][:ppb]).to be_within(0.5).of(8.89)
+		end
+
+		it "returns an array of hashes" do
+			expect(game.bonus_stats).to be_instance_of Array
+			expect(game.bonus_stats[0]).to be_instance_of Hash
+		end
 	end
 end
 
