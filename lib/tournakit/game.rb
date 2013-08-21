@@ -71,7 +71,7 @@ module Tournakit
 		# @param json [String] the JSON representation of a game
 		# @return [Game] the loaded object
 		def self.parse(json)
-			return self.json_create(JSON.parse(json))
+			return JSON.parse(json)
 		end
 
 		# Serializes the +Game+ to JSON for storage or wire transfer. This does include a "json_class" attribute useful for roundtrip serializing back to Ruby, other parsers may feel free to ignore.
