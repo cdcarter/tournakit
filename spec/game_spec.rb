@@ -10,7 +10,7 @@ describe Tournakit::Game do
 		end
 	end
 
-	describe Tournakit::Game, "#bonus_stats" do
+	describe "#bonus_stats" do
 		it "calculates ppb for both teams" do
 			expect(game.bonus_stats[0][:ppb]).to be_instance_of Float
 			expect(game.bonus_stats[0][:ppb]).to be_within(0.5).of(7.14)
@@ -21,6 +21,18 @@ describe Tournakit::Game do
 		it "returns an array of hashes" do
 			expect(game.bonus_stats).to be_instance_of Array
 			expect(game.bonus_stats[0]).to be_instance_of Hash
+		end
+	end
+
+	describe "#stat_line" do
+		let(:royline)  { {:tens => 7, :negs => 1, :powers => 0, :points => 65} }
+		let(:zachline) { {:tens => 4, :negs => 0, :powers => 0, :points => 40}}
+		it "gives the stat line for a player by name" do
+			expect(game.stat_line("Roy Slick")).to eq royline
+		end
+
+		it "gives the stat line for a player by index" do
+			expect(game.stat_line(1,1)).to eq zachline
 		end
 	end
 end
