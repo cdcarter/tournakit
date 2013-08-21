@@ -25,7 +25,8 @@ class Tournakit::Collection
 	# @param team [String] the name of the team
 	# @return [Array<String>] the names of every player on that team
 	def players(team)
-		
+		# select all the games including that team, and then get that teams roster from each game, flatten, and remove dups.
+		@rounds.select{|g| g.teams.include?(team)}.map {|g| g.players[g.teams.index(team)]}.flatten.uniq
 	end
 
 	# Renames a team in all Game objects that it was in
