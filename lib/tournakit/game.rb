@@ -30,9 +30,8 @@ module Tournakit
 		#   [[0,0,0,10],[0,0,-5,0]] 
 		# for a tossup where the fourth player on team A got 10 pts, and the third player on team B got -5.
 		attr_accessor :tossups
-
-		# :nodoc:
-		def self.json_create(obj)
+		
+		def self.json_create(obj) # :nodoc:
 			game = self.new
 			game.event = obj["event"]
 			game.round = obj["round"]
@@ -55,7 +54,7 @@ module Tournakit
 			return self.json_create(JSON.parse(json))
 		end
 
-		# Serializes the +Game+ to JSON for storage or wire transfer
+		# Serializes the +Game+ to JSON for storage or wire transfer. This does include a "json_class" attribute useful for roundtrip serializing back to Ruby, other parsers may feel free to ignore.
 		#
 		# return:: +String+ of JSON
 		def to_json(*a)
