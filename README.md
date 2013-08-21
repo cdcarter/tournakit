@@ -12,6 +12,8 @@ Second, with the included parser (and more to come, with any luck!) it's easy to
 ## Included...
 The `data/` folder includes the entire corpus of scoresheets from the standard bracket of 2010 New Trier Varsity, via Jonah Greenthal. This tournament was a mirror of the 2010 GSAC. The stats can be found on the IHSSBCA website, [here][3]. Thanks Jonah!
 
+An [example script][4] is also included to show how you could use this to quickly calculate full tossup conversion stats for your tournament, automatically, from many scoresheet files.
+
 ## Whats next?
 Check the issues tracker.
 
