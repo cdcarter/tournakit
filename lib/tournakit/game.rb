@@ -30,8 +30,20 @@ module Tournakit
 		#   [[0,0,0,10],[0,0,-5,0]] 
 		# for a tossup where the fourth player on team A got 10 pts, and the third player on team B got -5.
 		attr_accessor :tossups
+
+		# [Array<Hash,Hash>] with keys
+		#   * :+hrd+ [Integer] of bonuses heard by the team
+		#   * :+pts+ [Integer] of points earned on bonuses by the team
+		#   * :+ppb+ [Float] of the points per bonus for the team
+		attr_accessor :bonus_stats
+
+		attr_accessor :stat_lines
 		
-		def self.json_create(obj) # :nodoc:
+		# Turns a parsed hash of data into a Game object. For internal use only. You should probably be calling ::parse.
+		# @private
+		# @param obj [Hash] a hash, supplied by a JSON parser
+		# @return [Game] the object
+		def self.json_create(obj)
 			game = self.new
 			game.event = obj["event"]
 			game.round = obj["round"]
@@ -41,6 +53,7 @@ module Tournakit
 			game.players = obj["players"]
 			game.score = obj["score"]
 			game.tossups = obj["tossups"].map {|h| {:buzzes => h["buzzes"], :bpts => h["bpts"]}}
+			game.bonus_stats = obj["bonus_stats"].map {|h| {:hrd => h["hrd"], :pts => h["pts"], :ppb => h["ppb"]}}
 			return game
 		end
 
@@ -48,48 +61,39 @@ module Tournakit
 		#
 		# TODO: make sure json is well formed.
 		#
-		# json:: +String+ of JSON containing a game
-		# return:: +Game+ object
+		# @param json [String] the JSON representation of a game
+		# @return [Game] the loaded object
 		def self.parse(json)
 			return self.json_create(JSON.parse(json))
 		end
 
 		# Serializes the +Game+ to JSON for storage or wire transfer. This does include a "json_class" attribute useful for roundtrip serializing back to Ruby, other parsers may feel free to ignore.
 		#
-		# return:: +String+ of JSON
+		# @return [String] of JSON
 		def to_json(*a)
 			to_hash.to_json(*a)
 		end
 
-		# Calculate the Bonus Question statistics for each team.
-		#
-		# Note: this function handles bouncebacks by counting bonus points earned on all tossups, but does not consider bounced back bonuses as heard.
-		# I do not remember what the generally accepted method of calculating PPB in a bounceback situation is. So right now, there is no modification, it is purely bpts/bhrd.
-		#
-		# return:: +Array+ of two +Hash+es with the follwing keys:
-		# hrd:: +Integer+ of bonuses heard by the team
-		# pts:: +Integer+ of points earned on bonuses by the team
-		# ppb:: a +Float+ of the points per bonus for the team
-		def bonus_stats
-			stats = [{hrd:0, pts:0}, {hrd:0, pts:0}]
-			self.tossups.each {|tossup|
-				tossup[:buzzes].each_with_index {|buzzline,team|
-					stats[team][:hrd] += 1 if buzzline.any? {|buzz| buzz > 0}
-				}
-				tossup[:bpts].each_with_index {|pts, team|
-					stats[team][:pts] += pts
-				}
-			}
-			stats.each {|h|
-				h[:ppb] = h[:pts].to_f/h[:hrd].to_f
-			}
-			return stats
+		# @overload stat_line(team_idx,player_idx)
+		#   Returns the statline for a player by index.
+		#   @param team_idx [Integer] +0+ or +1+, indicating which of the two teams in the round the player is on
+		#   @param player_idx [Integer] index of the player, as in the order they are in the +@players+ array
+		# @overload stat_line(name)
+		#   Returns the statline for a player given their name.
+		#   @param name [String] the name of a player in the round.
+		# 
+		# @return [Hash] of the statline
+		#  * +:tens+ [Integer] of tens earned
+		#  * +:powers+ [Integer] of powers earned
+		#  * +:negs+ [Integer] of negs racked up
+		#  * +:points+ [Integer] of total points scored by player
+		def stat_line(*args)
 		end
 
 		private
-		# return:: a +Hash+ containing all game information
+		# @return [Hash] containing all game information
 		def to_hash
-			{:event => event, :round => round, :moderator => moderator, :room => room, :teams => teams, :players => players, :score => score, :tossups => tossups, JSON.create_id => self.class.name}
+			{:event => event, :round => round, :moderator => moderator, :room => room, :teams => teams, :players => players, :score => score, :bonus_stats => bonus_stats, :tossups => tossups, JSON.create_id => self.class.name}
 		end
 	end
 end

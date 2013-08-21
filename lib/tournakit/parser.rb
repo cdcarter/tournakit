@@ -41,10 +41,30 @@ module Tournakit
 			game.players = parse_players(sheet)
 			game.score = [sheet.cell("B",26).to_i,sheet.cell("K",26).to_i]
 			game.tossups = parse_tossups(sheet)
+			game.stat_lines = parse_stat_lines(sheet)
+			game.bonus_stats = parse_bonus_stats(sheet,game)
 			return game
 		end
 
 		private
+		def parse_stat_lines(sheet)
+			
+		end
+
+		def parse_bonus_stats(sheet,game)
+			stats = [{pts: sheet.cell("G",33).to_i, ppb: sheet.cell("B",34), hrd:0 },
+							 {pts: sheet.cell("P",33).to_i, ppb: sheet.cell("K",34), hrd:0 }]
+			game.tossups.each {|tossup|
+				tossup[:buzzes].each_with_index {|buzzline,team|
+					stats[team][:hrd] += 1 if buzzline.any? {|buzz| buzz > 0}
+				}
+				tossup[:bpts].each_with_index {|pts, team|
+					stats[team][:pts] += pts
+				}
+			}
+			return stats
+		end
+
 		def parse_players(sheet)
 			team_a = (2..6).map {|col| sheet.cell(4,col)}
 			team_b = (11..15).map {|col| sheet.cell(4,col)}
