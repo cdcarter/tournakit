@@ -15,8 +15,10 @@ class Tournakit::Collection
 	def rename_team(oldname, newname)
 		counter = 0
 		@rounds.map! do |game|
-			game.teams[game.teams.index(oldname)] = newname if game.teams.index(oldname)
-			counter +=1 
+			if game.teams.index(oldname)
+				game.teams[game.teams.index(oldname)] = newname 
+				counter +=1 
+			end
 			game
 		end
 
