@@ -8,6 +8,14 @@ describe Tournakit::Collection do
 		expect(collection.to_a).to have(collection.rounds.size).items
 	end
 
+	describe "#players" do
+		let(:loyola) {["Rosie Frehe", "Joe Birk", "Zachary Hayes", "Mark Brederman", nil, "Joe", "Mark", "Rosie", "Zachary"] }
+		it "returns the names of all the players on a team" do
+			players = collection.players("Loyola C")
+			expect(players).to eq(loyola)
+		end
+	end
+
 	describe "#teams" do
 		it "contains all the team names in the collection" do
 			expect(collection.teams).to have(11).items

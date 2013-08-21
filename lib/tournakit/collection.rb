@@ -21,9 +21,16 @@ class Tournakit::Collection
 		@rounds.map(&:teams).flatten.uniq
 	end
 
+	# list all the players on a team.
+	# @param team [String] the name of the team
+	# @return [Array<String>] the names of every player on that team
+	def players(team)
+		
+	end
+
 	# Renames a team in all Game objects that it was in
-	# @param oldname [String] of the team name to be changed
-	# @param newname [String] of the name to change to
+	# @param oldname [String] the team name to be changed
+	# @param newname [String] the name to change to
 	# @return [Integer] the number of names that had to be changed
 	def rename_team(oldname, newname)
 		counter = 0
