@@ -10,6 +10,7 @@ class Tournakit::Collection
 		@rounds=rounds
 	end
 
+	# defer this call to the +rounds+ [Array<Tournakit::Game>]
 	def each(*args,&blk)
 		@rounds.each(*args,&blk) 
 	end
