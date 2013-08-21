@@ -3,40 +3,46 @@ module Tournakit
 	#
 	# Game objects may be created by hand by your parser class, or through the standard wire format, JSON.
 	class Game
-		# a +String+ containing the event name
+		# @return [String] the event name
 		attr_accessor :event
 
-		# an +Integer+ containing the round number, or an +Array+ of +[Integer,String]+
+		# @return [Integer] the round number
+		# @return [Array<Integer,String>] the round number and packet name
 		attr_accessor :round
 
-		# a +String+ containing the round moderator's name or email address
+		# @return [String] the name or email of the moderator for the round
 		attr_accessor :moderator
 
-		# a +String+ containing the room name or number
+		# @return [String] the name or number of the room the round took place in
 		attr_accessor :room
 
-		# an +Array+ of two Strings, containing the names of the teams playing. the order these names are in will be used throughout the game object
+		# @return [Array<String>] the names of the two teams in the round, in canonical order
 		attr_accessor :teams
 
-		# an +Array+ of two +Arrays+, each of size n containing that team's player names or emails.
+		# @return [Array<Array<String>>] arrays of player names or emails
 		attr_accessor :players
 
-		# an +Array+ of two +Integers+, containing that team's score
+		# @return [Array<Integer>] team scores
 		attr_accessor :score
 
-		# an +Array+ of n +Hash+ objects, with two keys. :buzzes contains an +Array+ of two +Array+ of n player lines. :bpts contains an +Array+ of two +Integer+s, containing how many points that team got on the bonus associated with this tossup
+		# an [Array] of n +Hash+ objects, with two keys. :buzzes contains an +Array+ of two +Array+ of n player lines. :bpts contains an +Array+ of two +Integer+s, containing how many points that team got on the bonus associated with this tossup
 		#
 		# the :buzzes element will look like 
 		#   [[0,0,0,10],[0,0,-5,0]] 
 		# for a tossup where the fourth player on team A got 10 pts, and the third player on team B got -5.
 		attr_accessor :tossups
 
-		# [Array] +Hash,Hash+ with keys
-		# :hrd:: [Integer] of bonuses heard by the team
-		# :pts:: [Integer] of points earned on bonuses by the team
-		# :ppb:: [Float] of the points per bonus for the team
+		# @return [Array<Hash>] the team bonus stat lines in the form: <br/>
+		#   +:hrd+ [Integer] of bonuses heard by the team <br/>
+		#   +:pts+ [Integer] of points earned on bonuses by the team <br/>
+		#   +:ppb+ [Float] of the points per bonus for the team
 		attr_accessor :bonus_stats
 
+		# @return [Array<Array<Hash>>] the player statlines in the form: <br/>
+		#   +:points+ [Integer] the total points scored by that player <br/>
+		#   +:tens+ [Integer] the number of ten point questions answered correctly by the player <br/>
+		#   +:negs+ [Integer] the number of neg-fives docked against the player <br/>
+		#   +:powers+ [Integer] the number of questions answered correctly by the player before the powermark
 		attr_accessor :stat_lines
 		
 		# Turns a parsed hash of data into a Game object. For internal use only. You should probably be calling ::parse.
