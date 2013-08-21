@@ -20,3 +20,4 @@ Check the issues tracker.
 [1]:https://sites.google.com/site/hchsquizbowl/Home/excel-scoresheets
 [2]:https://github.com/cdcarter/tournakit/tree/master/schema.json
 [3]:http://www.ihssbca.org/statistics/2010_NTV_ADVANTAGE/2010_NTV_standard_prelims_standings.php
+[4]:https://github.com/cdcarter/tournakit/tree/master/script/event.rb
