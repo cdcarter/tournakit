@@ -2,6 +2,11 @@ require 'spec_helper'
 describe Tournakit::Collection do
 	let(:collection) { Tournakit::Collection.new(JSON.load(File.read("data/Czupryn.json"))) }
 
+	it "is enumberable" do
+		expect(collection).to respond_to(:each)
+		expect(collection).to respond_to(:to_a)
+	end
+
 	describe "#teams" do
 		it "contains all the team names in the collection" do
 			expect(collection.teams).to have(11).items
