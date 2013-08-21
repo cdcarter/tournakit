@@ -5,6 +5,7 @@ describe Tournakit::Collection do
 	it "is enumberable" do
 		expect(collection).to respond_to(:each)
 		expect(collection).to respond_to(:to_a)
+		expect(collection.to_a).to have(collection.rounds.size).items
 	end
 
 	describe "#teams" do

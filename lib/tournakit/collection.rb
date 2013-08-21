@@ -1,11 +1,17 @@
 class Tournakit::Collection
 
+	include Enumerable
+
 	# @return [Array<Tournakit::Game>] the collection of games (from an event or perhaps packet set) to be worked on
 	attr_accessor :rounds
 
 	# @param rounds [Array<Tournakit::Game>] the rounds for this collection
 	def initialize(rounds=[])
 		@rounds=rounds
+	end
+
+	def each(*args,&blk)
+		@rounds.each(*args,&blk) 
 	end
 
 	# @return [Array<String>] all of the team names in the collection
