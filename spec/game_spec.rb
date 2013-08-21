@@ -32,7 +32,7 @@ describe Tournakit::Game do
 		end
 
 		it "gives the stat line for a player by index" do
-			expect(game.stat_line(1,1)).to eq zachline
+			expect(game.stat_line(1,2)).to eq zachline
 		end
 	end
 end
