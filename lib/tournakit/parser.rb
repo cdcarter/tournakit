@@ -74,9 +74,6 @@ module Tournakit
 						end
 					}
 				}
-				tossup[:bpts].each_with_index {|pts, team|
-					bonus_stats[team][:pts] += pts
-				}
 			}
 			return [bonus_stats, stat_lines]
 		end
