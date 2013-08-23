@@ -2,7 +2,7 @@ require 'tournakit'
 require 'erb'
 require 'webrick'
 
-EX = Dir["data/Example Tournament/*.xls"].map {|f| Tournakit::LilyChenParser.parse_rounds(f)}.flatten
+EX = Dir["data/EXAMPLE/*.xls"].map {|f| Tournakit::LilyChenParser.parse_rounds(f)}.flatten
 Tournament = Tournakit::Collection.new(EX)
 
 class RoundStats

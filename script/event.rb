@@ -1,7 +1,7 @@
 require 'tournakit'
 require 'pp'
 
-all_games = Dir["data/*.xls"].map {|file| Tournakit::LilyChenParser.parse_rounds(file) }
+all_games = Dir["data/NTV/*.xls"].map {|file| Tournakit::LilyChenParser.parse_rounds(file) }
 
 all_games.flatten!
 

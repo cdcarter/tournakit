@@ -1,6 +1,6 @@
 require 'spec_helper'
 describe Tournakit::Collection do
-	let(:collection) { Tournakit::Collection.new(JSON.load(File.read("data/Czupryn.json"))) }
+	let(:collection) { Tournakit::Collection.new(JSON.load(File.read("data/NTV/Czupryn.json"))) }
 	let(:loyola) {["Rosie Frehe", "Joe Birk", "Zachary Hayes", "Mark Brederman", nil, "Joe", "Mark", "Rosie", "Zachary"] }
 
 

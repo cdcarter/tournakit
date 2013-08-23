@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Tournakit::SQBSWriter do
-	let(:event) { Tournakit::Collection.new JSON.parse(File.read("data/Example Tournament/example.tournakit")) }
-	let(:file) { File.read("data/Example Tournament/EXAMPLEsqbs") }
+	let(:event) { Tournakit::Collection.new JSON.parse(File.read("data/EXAMPLE/example.tournakit")) }
+	let(:file) { File.read("data/EXAMPLE/EXAMPLEsqbs") }
 
 	describe "#sqbs" do
 		it "returns a String " do
@@ -11,7 +11,7 @@ describe Tournakit::SQBSWriter do
 		end
 		it "returns data that ostensibly is from the input" do
 			writer = Tournakit::SQBSWriter.new(event)
-			expect(writer.sqbs.split("\n")).to include "Andrew Hart"
+			expect(writer.sqbs.split("\r\n")).to include "Andrew Hart"
 		end
 	end
 end

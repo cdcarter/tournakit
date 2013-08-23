@@ -1,7 +1,7 @@
 require 'tournakit'
 require 'yaml'
 
-NTV = Tournakit::Collection.new(JSON.parse(File.read("data/NTV.json")))
+NTV = Tournakit::Collection.new(JSON.parse(File.read("data/NTV/NTV.json")))
 
 TEAM = "Byron"
 

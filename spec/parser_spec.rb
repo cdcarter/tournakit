@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Tournakit::LilyChenParser, "#parse" do
-	let(:parser) { Tournakit::LilyChenParser.new("data/Czupryn.xls") }
+	let(:parser) { Tournakit::LilyChenParser.new("data/NTV/Czupryn.xls") }
 	let(:result) { parser.parse }
 
 	it "returns a game object when passed a valid spreadsheet" do
@@ -22,13 +22,13 @@ end
 
 describe Tournakit::LilyChenParser, "::parse_rounds" do
 	it "parses every worksheet in the file" do
-		games = Tournakit::LilyChenParser.parse_rounds("data/Czupryn.xls")
+		games = Tournakit::LilyChenParser.parse_rounds("data/NTV/Czupryn.xls")
 		expect(games.length).to eq 10
 	end
 
 	# skipped by default cause it sucks
 	it "is able to handle the whole data set", :skip => true do
-		all_games = Dir["data/*.xls"].map {|file| Tournakit::LilyChenParser.parse_rounds(file) }
+		all_games = Dir["data/NTV/*.xls"].map {|file| Tournakit::LilyChenParser.parse_rounds(file) }
 		expect(all_games.length).to eq 12
 		expect(all_games[5].length).to eq 10
 	end

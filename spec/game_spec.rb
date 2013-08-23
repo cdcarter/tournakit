@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Tournakit::Game do
-	let(:game) { Tournakit::Game.parse(File.read("data/SingleRound.json")) }
+	let(:game) { Tournakit::Game.parse(File.read("data//NTV/SingleRound.json")) }
 
 	describe "::parse" do
 		it "parses a single game" do
@@ -34,7 +34,7 @@ end
 
 describe JSON, "#load" do
 	it "can parse a full set of rounds" do
-		games = JSON.load(File.read("data/Czupryn.json"))
+		games = JSON.load(File.read("data/NTV/Czupryn.json"))
 		expect(games).to be_instance_of Array
 		expect(games.length).to eq 10
 		expect(games[3]).to be_instance_of Tournakit::Game
