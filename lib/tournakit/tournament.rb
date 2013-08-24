@@ -107,6 +107,7 @@ module Tournakit
 					play.powers = 0
 					play.interrupts = 0
 					play.tossups_heard = 0
+					play.gp = 0.0
 					play
 				end
 
@@ -141,9 +142,12 @@ module Tournakit
 							player.points += line[:points]
 							if line[:tossups_heard]
 								player.tossups_heard += line[:tossups_heard]
+								player.gp += (line[:tossups_heard].to_f / round.tossups.length)
 							else
 								player.tossups_heard += round.tossups.length
+								player.gp += 1
 							end
+							
 						end
 
 						t.tossups_heard += round.tossups.length
@@ -157,6 +161,15 @@ module Tournakit
 				end
 
 				t.gp = (t.wins+t.losses+t.ties)
+
+				# calculate the player stats
+				t.players.each do |player|
+					player.pptuh = player.points.to_f / player.tossups_heard
+					player.ppg = player.points.to_f / player.gp
+					player.ppi = player.powers.to_f / player.interrupts
+					player.gpi = (player.tens+player.powers).to_f / player.interrupts
+				end
+
 				t.pct = t.wins.to_f / t.gp
 				t.ppg = t.points.to_f / t.gp
 				t.papg = t.points_against.to_f / t.gp
