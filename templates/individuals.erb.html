@@ -1,0 +1,41 @@
+<html>
+<head><title><%= event %> Standings</title>
+<link rel="stylesheet" href="http://bootswatch.com/spacelab/bootstrap.min.css"></head>
+<body>
+	<div class="container">
+	<h1><%= event %> Individual Standings</h1>
+	<div class="span10">
+		<p>Click a column header to sort.</p>
+		<table class="table table-striped table-bordered sortable">
+			<tr>
+				<th>Rank</th><th>Player</th><th>Team</th>
+				<th><abbr title="Games Played">GP</abbr></th><th>15</th><th>10</th><th>-5</th>
+				<th><abbr title="Tossups heard">TUH</abbr></th><th><abbr title="Points per tossup heard">PPTUH</abbr></th>
+				<th><abbr title="Powers to interrupt ratio">P/I</abbr></th><th><abbr title="Gets per interrupt">G/I</abbr></th>
+				<th><abbr title="Total points scored">Pts</abbr></th><th><abbr title="Points per game played">PPG</abbr></th>
+			</tr>
+
+			<% players.each_with_index do |player,idx| %>
+				<tr>
+					<td><%= idx + 1 %></td>
+					<td><%= player.name %></td>
+					<td><%= player.team %></td>
+					<td><%= "%.1f" % player.gp %></td>
+					<td><%= player.powers %></td>
+					<td><%= player.tens %></td>
+					<td><%= player.interrupts %></td>
+					<td><%= player.tossups_heard %></td>
+					<td><%= "%.2f" % player.pptuh %></td>
+					<td><%= "%.2f" % player.ppi %></td>
+					<td><%= "%.2f" % player.gpi %></td>
+					<td><%= player.points %></td>
+					<td><%= "%.2f" % player.ppg %></td>
+				</tr>
+			<% end %>
+		</table>
+	</div>
+	</div>
+</body>
+
+<script src="http://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+</html>

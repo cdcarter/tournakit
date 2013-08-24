@@ -186,6 +186,10 @@ module Tournakit
 
 		end
 
+		def player_stats
+			teams.map {|t|t.players}.flatten
+		end
+
 
 		# Get the stats for a single team.
 		# @param team [String] the name of the team

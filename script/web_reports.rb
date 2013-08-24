@@ -21,9 +21,16 @@ class WebStandings
 	def event
 		@event.rounds[0].event
 	end
+
+	def players
+		@event.player_stats.sort_by{|player| player.ppg}.reverse
+	end
 end
 
 r = WebStandings.new(ETournament)
 File.open("output/standings.html","w") {|f| 
 	f << ERB.new(File.read("templates/standings.erb.html")).result(r.get_binding) 
+}
+File.open("output/individuals.html","w") {|f| 
+	f << ERB.new(File.read("templates/individuals.erb.html")).result(r.get_binding) 
 }
