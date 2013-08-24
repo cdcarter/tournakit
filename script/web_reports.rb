@@ -24,10 +24,6 @@ class WebStandings
 end
 
 r = WebStandings.new(ETournament)
-standings = ERB.new(File.read("templates/standings.erb.html"))
-result = standings.result(r.get_binding)
-server = WEBrick::HTTPServer.new(:Port => 8000)
-server.mount_proc '/' do |req, res| res.body = result end
-trap 'INT' do server.shutdown end
-
-server.start
+File.open("output/standings.html","w") {|f| 
+	f << ERB.new(File.read("templates/standings.erb.html")).result(r.get_binding) 
+}
