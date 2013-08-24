@@ -64,6 +64,10 @@ module Tournakit
 			return @teams
 		end
 
+		def team(team)
+			teams.find{|t| t.name == team}
+		end
+
 		# @param team [String] the name of the team you want info for
 		# @return [Integer] the number of games the team won
 		def wins(team)
