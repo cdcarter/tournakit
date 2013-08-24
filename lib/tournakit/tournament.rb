@@ -46,7 +46,8 @@ module Tournakit
 		# @!attribute ppi
 		#   @return [Float] the ratio of powers to interrupts for the team
 		# @!attribute gpi
-		#   @return [Float] the ratio of gets (that is, the number of tossups correctly answered for 10 or 15 pts) to interrupts
+		#   @return [Float] the ratio of gets (that is, the number of tossups correctly answered for 10 or 15 pts) 
+		#                   to interrupts
 		# @!attribute ppb
 		#   @return [Float] the the number of bonus points earned per bonus heard. 30 is a perfect score.
 		# @!attribute players
@@ -77,7 +78,8 @@ module Tournakit
 		# @!attribute ppi
 		#   @return [Float] the ratio of powers to interrupts
 		# @!attribute gpi
-		#   @return [Float] the ratio of gets (that is, the number of tossups correctly answered for 10 or 15 pts) to interrupts
+		#   @return [Float] the ratio of gets (that is, the number of tossups correctly answered for 10 or 15 pts)
+		#                   to interrupts
 		# @!attribute ppg
 		#   @return [Float] the average number of tossup points scored per game by that player
 		end
@@ -91,6 +93,7 @@ module Tournakit
 		# @return [Array<Team>] the teams in this tournament, with statistics and standings 
 		attr_reader :teams
 
+		# @return [nil]
 		# Calculate the stats for the tournament
 		def calculate_stats
 			@teams = @rounds.map(&:teams).flatten.uniq.sort.map do |team|
