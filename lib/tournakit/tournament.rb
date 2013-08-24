@@ -5,7 +5,7 @@ module Tournakit
 
 		# Team is only useful in the context of a +Tournament+
 		Team = Struct.new(:wins,:losses,:ties,:points,:points_against,:tens,:powers,:interrupts,:tossups_heard,
-											:bonuses_heard,:bonus_points,:name,:gp,:pct,:ppg,:papg,:mrg,:pptuh,:ppi,:gpi)
+											:bonuses_heard,:bonus_points,:name,:gp,:pct,:ppg,:papg,:mrg,:pptuh,:ppi,:gpi,:ppb)
 
 		# the +Tournament+ version of teams provides statistics and +team_id+s
 		# @return [Array<Team>] the teams in this tournament, with statistics and standings
@@ -41,6 +41,9 @@ module Tournakit
 
 					t.points += round.score[tid]
 					t.points_against += round.score[otid]
+
+					t.bonuses_heard += round.bonus_stats[tid][:hrd]
+					t.bonus_points += round.bonus_stats[tid][:pts]
 					end
 				end
 
@@ -53,6 +56,8 @@ module Tournakit
 				t.pptuh = t.points.to_f / t.tossups_heard
 				t.ppi = t.powers.to_f / t.interrupts
 				t.gpi = (t.powers+t.tens).to_f / t.interrupts
+
+				t.ppb = t.bonus_points.to_f / t.bonuses_heard
 
 				t
 			end
@@ -144,5 +149,25 @@ module Tournakit
 		def gpi(team)
 			teams.find{|t|t.name==team}.gpi
 		end
+
+		# @param (see #wins)
+		# @return [Integer] the number of points scored on bonuses over the course of the tournament
+		def bonus_points(team)
+			teams.find{|t|t.name==team}.bonus_points
+		end
+
+		# @param (see #wins)
+		# @return [Integer] the number of bonus questions heard over the tournament
+		def bonuses_heard(team)
+			teams.find{|t|t.name==team}.bonuses_heard
+		end
+
+		# PPB, also known as points per bonus, or bonus conversion, is the number of bonus points earned per bonus heard. 30.0 is a perfect score.
+		# @param (see #wins)
+		# @return [Float] the points per bonus for the team over the tournament
+		def ppb(team)
+			teams.find{|t|t.name==team}.ppb
+		end
 	end
+
 end
