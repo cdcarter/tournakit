@@ -5,7 +5,7 @@ module Tournakit
 
 		# Team is only useful in the context of a +Tournament+
 		Team = Struct.new(:wins,:losses,:ties,:points,:points_against,:tens,:powers,:interrupts,:tossups_heard,
-											:bonuses_heard,:bonus_points,:name,:gp,:pct)
+											:bonuses_heard,:bonus_points,:name,:gp,:pct,:ppg,:papg,:mrg)
 
 		# the +Tournament+ version of teams provides statistics and +team_id+s
 		# @return [Array<Team>] the teams in this tournament, with statistics and standings
@@ -26,7 +26,7 @@ module Tournakit
 				t.bonuses_heard = 0
 				t.bonus_points = 0
 				@rounds.each do |round|
-					# make sure the team is in the round, and if it is, put its index in +tid+
+					# make sure the team is in the round, and if it is, put its index in +tid+, and the other team in +otid+
 					if tid = round.teams.index(team)
 						otid = [true,false][tid] ? 1 : 0
 						round.score[tid] > round.score[otid] ? t.wins +=1 : t.losses += 1
@@ -38,11 +38,17 @@ module Tournakit
 					end
 
 					t.tossups_heard += round.tossups.length
+
+					t.points += round.score[tid]
+					t.points_against += round.score[otid]
 					end
 				end
 
 				t.gp = (t.wins+t.losses+t.ties)
 				t.pct = t.wins.to_f / t.gp
+				t.ppg = t.points.to_f / t.gp
+				t.papg = t.points_against.to_f / t.gp
+				t.mrg = (t.points.to_f - t.points_against) / t.gp
 
 				t
 			end
@@ -95,6 +101,24 @@ module Tournakit
 		# @return [Integer] the number of tossups heard over the tournament
 		def tossups_heard(team)
 			teams.find{|t|t.name==team}.tossups_heard
+		end
+
+		# @param (see #wins)
+		# @return [Integer] the win margin of the team
+		def mrg(team)
+			teams.find{|t|t.name==team}.mrg
+		end
+
+		# @param (see #wins)
+		# @return [Integer] the average number of points scored against the team
+		def papg(team)
+			teams.find{|t|t.name==team}.papg
+		end
+
+		# @param (see #wins)
+		# @return [Integer] the average number of points scored by the team
+		def ppg(team)
+			teams.find{|t|t.name==team}.ppg
 		end
 	end
 end
