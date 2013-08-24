@@ -64,6 +64,24 @@ describe Tournakit::Tournament do
 				pending "depends on round#tossups to exist, because right now TUH isn't being stored for a round."
 			end
 		end
+
+		describe "#pptuh" do
+			it "returns the points per tossup heard" do
+				expect(event.pptuh "Illinois A").to be_within(0.1).of(16.3)
+			end
+		end
+
+		describe "#ppi" do
+			it "returns the powers per interrupts" do
+				expect(event.ppi "Illinois A").to be_within(0.1).of(1.67)
+			end
+		end
+
+		describe "#gpi" do
+			it "returns the gets (tens+powers) per interrupt" do
+				expect(event.gpi "Minnesota A").to be_within(0.1).of(4)
+			end
+		end
 	end
 
 	describe "game point methods" do

@@ -5,7 +5,7 @@ module Tournakit
 
 		# Team is only useful in the context of a +Tournament+
 		Team = Struct.new(:wins,:losses,:ties,:points,:points_against,:tens,:powers,:interrupts,:tossups_heard,
-											:bonuses_heard,:bonus_points,:name,:gp,:pct,:ppg,:papg,:mrg)
+											:bonuses_heard,:bonus_points,:name,:gp,:pct,:ppg,:papg,:mrg,:pptuh,:ppi,:gpi)
 
 		# the +Tournament+ version of teams provides statistics and +team_id+s
 		# @return [Array<Team>] the teams in this tournament, with statistics and standings
@@ -49,6 +49,10 @@ module Tournakit
 				t.ppg = t.points.to_f / t.gp
 				t.papg = t.points_against.to_f / t.gp
 				t.mrg = (t.points.to_f - t.points_against) / t.gp
+
+				t.pptuh = t.points.to_f / t.tossups_heard
+				t.ppi = t.powers.to_f / t.interrupts
+				t.gpi = (t.powers+t.tens).to_f / t.interrupts
 
 				t
 			end
@@ -119,6 +123,26 @@ module Tournakit
 		# @return [Integer] the average number of points scored by the team
 		def ppg(team)
 			teams.find{|t|t.name==team}.ppg
+		end
+
+		# @param (see #wins)
+		# @return [Integer] the number of points scored per tossup heard, over the course of the tournament
+		def pptuh(team)
+			teams.find{|t|t.name==team}.pptuh
+		end
+
+		# P/I is the ratio of powers to interrups
+		# @param (see #wins)
+		# @return [Integer] the ratio of powers to interrupts
+		def ppi(team)
+			teams.find{|t|t.name==team}.ppi
+		end
+
+		# G/I or Gets per Interrupt is the ratio of powers plus the number of regular tossups answered to the number of interrupts penalized
+		# @param (see #wins)
+		# @return [Integer] the G/I ratio
+		def gpi(team)
+			teams.find{|t|t.name==team}.gpi
 		end
 	end
 end
