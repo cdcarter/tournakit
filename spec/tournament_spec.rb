@@ -135,6 +135,81 @@ describe Tournakit::Tournament do
 		end
 	end
 
+	describe Tournakit::Tournament::Player do
+		let(:andrew) {event.team("Minnesota A").players.sort_by{|p| p.name}[0]}
+		let(:sorice) {event.team("Illinois A").players.find {|p| p.name == "Mike Sorice"}}
+
+		describe "#team" do
+			it "contains the team the player is a member of" do
+				expect(sorice.team).to eq "Illinois A"
+			end
+		end
+
+		describe "#tens" do
+			it "contains the number of tens that player got" do
+				expect(andrew.tens).to eq 4
+			end
+		end
+
+		describe "#powers" do
+			it "contains the number of powers the player got" do
+				expect(sorice.powers).to eq 8
+			end
+		end
+
+		describe "#interrupts" do
+			it "contains the number of interrupts the player docked" do
+				expect(andrew.interrupts).to eq 1
+			end
+		end
+
+		describe "#gp" do
+			it "contains the number of games the player has played" do
+				expect(sorice.gp).to be_within(0.0001).of(3.0)
+			end
+
+			it "gives fractions for partial games" do
+				pending "no test data has partial games yet"
+			end
+		end
+
+		describe "#tossups_heard" do
+			it "contains the number of tossups the player has heard" do
+				expect(sorice.tossups_heard).to eq 60
+			end
+		end
+
+		describe "#pptuh" do
+			it "calculates pptuh" do
+				expect(sorice.pptuh).to be_within(0.1).of(3.75)
+			end
+		end
+
+		describe "#points" do
+			it "contains the total points scored by player" do
+				expect(sorice.points).to eq 225
+			end
+		end
+
+		describe "#ppg" do
+			it "calculates ppg" do
+				expect(andrew.ppg).to be_within(0.01).of(16.67)
+			end
+		end
+
+		describe "#ppi" do
+			it "calculates ppi" do
+				expect(andrew.ppi).to be_within(0.01).of(1)
+			end
+		end
+
+		describe '#gpi' do
+			it "calculates gpi" do
+				expect(sorice.gpi).to be_within(0.01).of(19)
+			end
+		end
+	end
+
 	describe "#teams" do
 		it "provides an array of teams in the tournament" do
 			expect(event.teams).to have(4).teams
