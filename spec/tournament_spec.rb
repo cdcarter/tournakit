@@ -66,6 +66,26 @@ describe Tournakit::Tournament do
 		end
 	end
 
+	describe "game point methods" do
+		describe "#ppg" do
+			it "calculates ppg" do
+				expect(event.ppg "Illinois A").to be_within(0.1).of(326.7)
+			end
+		end
+
+		describe "#papg" do
+			it "calculates papg" do
+				expect(event.papg "Illinois A").to be_within(0.1).of(293.3)
+			end
+		end
+
+		describe "#mrg" do
+			it "calculates win margin" do
+				expect(event.mrg "Illinois A").to be_within(0.1).of(33.3)
+			end
+		end
+	end
+
 	describe "#teams" do
 		it "provides an array of teams in the tournament" do
 			expect(event.teams).to have(4).teams
