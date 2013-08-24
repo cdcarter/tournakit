@@ -78,7 +78,7 @@ module Tournakit
 		end
 
 		# @param (see #wins)
-		# @return [Integer] that team's win percentage
+		# @return [Float] that team's win percentage
 		def pct(team)
 			teams.find{|t|t.name==team}.pct
 		end
@@ -108,39 +108,39 @@ module Tournakit
 		end
 
 		# @param (see #wins)
-		# @return [Integer] the win margin of the team
+		# @return [Float] the win margin of the team
 		def mrg(team)
 			teams.find{|t|t.name==team}.mrg
 		end
 
 		# @param (see #wins)
-		# @return [Integer] the average number of points scored against the team
+		# @return [Float] the average number of points scored against the team
 		def papg(team)
 			teams.find{|t|t.name==team}.papg
 		end
 
 		# @param (see #wins)
-		# @return [Integer] the average number of points scored by the team
+		# @return [Float] the average number of points scored by the team
 		def ppg(team)
 			teams.find{|t|t.name==team}.ppg
 		end
 
 		# @param (see #wins)
-		# @return [Integer] the number of points scored per tossup heard, over the course of the tournament
+		# @return [Float] the number of points scored per tossup heard, over the course of the tournament
 		def pptuh(team)
 			teams.find{|t|t.name==team}.pptuh
 		end
 
 		# P/I is the ratio of powers to interrups
 		# @param (see #wins)
-		# @return [Integer] the ratio of powers to interrupts
+		# @return [Float] the ratio of powers to interrupts
 		def ppi(team)
 			teams.find{|t|t.name==team}.ppi
 		end
 
 		# G/I or Gets per Interrupt is the ratio of powers plus the number of regular tossups answered to the number of interrupts penalized
 		# @param (see #wins)
-		# @return [Integer] the G/I ratio
+		# @return [Float] the G/I ratio
 		def gpi(team)
 			teams.find{|t|t.name==team}.gpi
 		end
