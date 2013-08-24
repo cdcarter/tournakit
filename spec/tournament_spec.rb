@@ -54,13 +54,14 @@ describe Tournakit::Tournament do
 		describe "#interrupts" do
 			it "returns the number of interrupts the team was penalized on" do
 				expect(event.interrupts "Illinois A").to eq 6
-				expect(event.interrups "Harvard A").to eq 8
+				expect(event.interrupts "Harvard A").to eq 8
 			end
 		end
 
 		describe "#tossups_heard" do
 			it "returns the number of tossups that team heard during the tournament" do
-				expect(event.tuh "Illinois A").to eq 60
+				expect(event.tossups_heard "Illinois A").to eq 60
+				pending "depends on round#tossups to exist, because right now TUH isn't being stored for a round."
 			end
 		end
 	end
