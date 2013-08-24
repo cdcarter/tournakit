@@ -5,7 +5,8 @@
 	<div class="container">
 	<h1><%= event %> Team Standings</h1>
 	<div class="span10">
-		<table class="table">
+		<p>Click a column header to sort.</p>
+		<table class="table table-striped table-bordered sortable">
 			<tr>
 				<th>Rank</th><th>Team</th><th>W</th><th>L</th><th>T</th><th><abbr title="Win Percentage">Pct</abbr></th>
 				<th><abbr title="Points scored per game">PPG</abbr></th><th><abbr title="Average points scored against team">PAPG</abbr></th>
@@ -35,4 +36,6 @@
 	</div>
 	</div>
 </body>
+
+<script src="http://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 </html>
