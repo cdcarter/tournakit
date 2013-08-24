@@ -6,6 +6,7 @@ require 'tournakit/game'
 require 'tournakit/sqbs_parser'
 require	'tournakit/sqbs_writer'
 require 'tournakit/collection'
+require 'tournakit/tournament'
 
 require 'tournakit/version'
 
