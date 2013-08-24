@@ -1,0 +1,35 @@
+{
+	"event":"EXAMPLE INVITATIONAL",
+	"round":1,
+	"moderator":"J Byko",
+	"room":"A",
+	"tossups_heard":20,
+	"teams":[
+		"Minnesota A",
+		"Chicago A"
+	],
+	"players":[
+		["Brendan Byrne","Andrew Hart","Rob Carson","Gautam Kandlikar"],
+		["Shantanu Jha","Selene Koo","David Seal","Seth Teitler"]
+	],
+	"score":[300,355], // score for MN A, score for Chicago A
+	"bonus_stats":[
+		{"pts":200,"ppb":20.0,"hrd":10}, // Bonus stats for MN A
+		{"pts":245,"ppb":24.5,"hrd":10} // Bonus stats for Chicago A
+	],
+	"stat_lines":[
+			[ // stats for MN A
+				{"tens":1,"powers":1,"points":15,"negs":2, "tossups_heard":20}, //stat line for player Brendan Byrne
+				{"tens":1,"powers":1,"points":25,"negs":0, "tossups_heard":20}, //stat line for player Andrew Hart
+				{"tens":3,"powers":0,"points":25,"negs":1, "tossups_heard":20}, //stat line for player Rob Carson
+				{"tens":2,"powers":1,"points":35,"negs":0, "tossups_heard":20} //stat line for player Gautam Kandlikar
+			],
+			[
+				{"tens":2,"powers":0,"points":20,"negs":0, "tossups_heard":20}, // stat line for Shantanu
+				{"tens":2,"powers":1,"points":35,"negs":0, "tossups_heard":20}, // stats for Selene
+				{"tens":2,"powers":0,"points":20,"negs":0, "tossups_heard":20}, // Stats for dseal
+				{"tens":2,"powers":1,"points":35,"negs":0, "tossups_heard":20}	// stats for Seth
+			]
+		],
+	"json_class":"Tournakit::Game"
+}
