@@ -1,0 +1,38 @@
+<html>
+<head><title><%= event %> Standings</title>
+<link rel="stylesheet" href="http://bootswatch.com/spacelab/bootstrap.min.css"></head>
+<body>
+	<div class="container">
+	<h1><%= event %> Team Standings</h1>
+	<div class="span10">
+		<table class="table">
+			<tr>
+				<th>Rank</th><th>Team</th><th>W</th><th>L</th><th>T</th><th><abbr title="Win Percentage">Pct</abbr></th>
+				<th><abbr title="Points scored per game">PPG</abbr></th><th><abbr title="Average points scored against team">PAPG</abbr></th>
+				<th><abbr title="Average win margin">Mrg</abbr></th><th>15</th><th>10</th><th>-5</th><th><abbr title="Tossups heard">TUH</abbr></th>
+				<th><abbr title="Points per tossup heard">PPTUH</abbr></th><th><abbr title="Powers per interrupt">P/I</abbr></th>
+				<th><abbr title="Correctly answered questions per interrupt">G/I</abbr></th><th><abbr title="Bonuses heard">Bhrd</abbr></th>
+				<th><abbr title="Bonus points earned">BPts</abbr></th><th><abbr title="Bonus conversion">PPB</abbr></th>
+			</tr>
+			<% teams.each_with_index do |team,idx| %>
+				<tr>
+					<td><%= idx + 1 %></td>
+					<td><%= team.name %></td>
+					<td><%= team.wins %></td>
+					<td><%= team.losses %></td>
+					<td><%= team.ties %></td>
+					<td><%= "%.2f" % team.pct %></td>
+					<td><%= "%.2f" % team.ppg %> </td>
+					<td><%= "%.2f" % team.papg %></td>
+					<td><%= "%.2f" % team.mrg %></td>
+					<td><%= team.powers %></td><td><%= team.tens %></td><td><%= team.interrupts %></td><td><%= team.tossups_heard %></td>
+					<td><%= "%.2f" % team.pptuh %></td><td><%= "%.2f" % team.ppi %></td>
+					<td><%= "%.2f" % team.gpi %></td><td><%= team.bonuses_heard %></td>
+					<td><%= team.bonus_points %></td><td><%= "%.2f" % team.ppb %></td>
+				</tr>
+			<% end %>
+		</table>
+	</div>
+	</div>
+</body>
+</html>
