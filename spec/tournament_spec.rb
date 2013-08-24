@@ -9,11 +9,27 @@ describe Tournakit::Tournament do
 		end
 	end
 
-	describe "#wins" do
-		it "returns how many games the given team has won" do
+	describe "standings methods" do
+		it "reflects how many games the given team has won" do
 			expect(event.wins("Chicago A")).to eq(3)
 			expect(event.wins("Harvard A")).to eq(0)
 		end
+		it "reflects how many games the given team has lost" do
+			expect(event.losses("Chicago A")).to eq(0)
+			expect(event.losses("Minnesota A")).to eq(2)
+		end
+		it "reflects how many ties there are" do
+			pending "totally doesn't actually do anything"
+			expect(event.ties("Chicago A")).to eq(0)
+		end
+		it "shows a win percentage" do
+			expect(event.pct("Chicago A")).to be_within(0.01).of(1.0)
+			expect(event.pct("Minnesota A")).to be_within(0.01).of(0.33)
+		end
+	end
+
+	describe do
+		
 	end
 
 	describe "#teams" do

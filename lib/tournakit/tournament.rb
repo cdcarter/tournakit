@@ -5,7 +5,7 @@ module Tournakit
 
 		# Team is only useful in the context of a +Tournament+
 		Team = Struct.new(:wins,:losses,:ties,:points,:points_against,:tens,:powers,:interrupts,:tossups_heard,
-											:bonuses_heard,:bonus_points,:name)
+											:bonuses_heard,:bonus_points,:name,:gp,:pct)
 
 		# the +Tournament+ version of teams provides statistics and +team_id+s
 		# @return [Array<Team>]
@@ -33,6 +33,9 @@ module Tournakit
 					end
 				end
 
+				t.gp = (t.wins+t.losses+t.ties)
+				t.pct = t.wins.to_f / t.gp
+
 				t
 			end
 			return @teams
@@ -40,6 +43,16 @@ module Tournakit
 
 		def wins(team)
 			teams.find{|t|t.name==team}.wins
+		end
+
+		def losses(team)
+			teams.find{|t|t.name==team}.losses
+		end
+		def ties(team)
+			teams.find{|t|t.name==team}.ties
+		end
+		def pct(team)
+			teams.find{|t|t.name==team}.pct
 		end
 	end
 end
