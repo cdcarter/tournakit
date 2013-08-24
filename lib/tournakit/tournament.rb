@@ -30,6 +30,14 @@ module Tournakit
 					if tid = round.teams.index(team)
 						otid = [true,false][tid] ? 1 : 0
 						round.score[tid] > round.score[otid] ? t.wins +=1 : t.losses += 1
+
+					round.stat_lines[tid].each do |line|
+						t.tens += line[:tens]
+						t.powers += line[:powers]
+						t.interrupts += line[:negs]
+					end
+
+					t.tossups_heard += round.tossups.length
 					end
 				end
 
@@ -63,6 +71,20 @@ module Tournakit
 		# @return [Integer] that team's win percentage
 		def pct(team)
 			teams.find{|t|t.name==team}.pct
+		end
+
+		def tens(team)
+			teams.find{|t|t.name==team}.tens
+		end
+
+		def powers(team)
+			teams.find{|t|t.name==team}.powers
+		end
+		def interrupts(team)
+			teams.find{|t|t.name==team}.interrupts
+		end
+		def tossups_heard(team)
+			teams.find{|t|t.name==team}.tossups_heard
 		end
 	end
 end
