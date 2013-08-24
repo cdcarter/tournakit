@@ -99,7 +99,16 @@ module Tournakit
 			@teams = @rounds.map(&:teams).flatten.uniq.sort.map do |team|
 				t = Team.new
 
-				t.players = self.players(team).map {|p| Player.new(p)}
+				t.players = self.players(team).map do |p| 
+					play = Player.new(p)
+					play.team = team
+					play.points = 0
+					play.tens = 0
+					play.powers = 0
+					play.interrupts = 0
+					play.tossups_heard = 0
+					play
+				end
 
 				t.name = team
 				# these are the accumulator variables, the rest of the stats will be calculated
@@ -120,10 +129,21 @@ module Tournakit
 						otid = [true,false][tid] ? 1 : 0
 						round.score[tid] > round.score[otid] ? t.wins +=1 : t.losses += 1
 
-						round.stat_lines[tid].each do |line|
+						round.stat_lines[tid].each_with_index do |line,idx|
+							playername = round.players[tid][idx]
+							player = t.players.find {|pp| pp.name == playername}
 							t.tens += line[:tens]
 							t.powers += line[:powers]
 							t.interrupts += line[:negs]
+							player.tens += line[:tens]
+							player.powers += line[:powers]
+							player.interrupts += line[:negs]
+							player.points += line[:points]
+							if line[:tossups_heard]
+								player.tossups_heard += line[:tossups_heard]
+							else
+								player.tossups_heard += round.tossups.length
+							end
 						end
 
 						t.tossups_heard += round.tossups.length
