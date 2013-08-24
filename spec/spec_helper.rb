@@ -17,3 +17,11 @@ RSpec.configure do |config|
   config.order = 'random'
 end
 
+RSpec::Matchers.define :a_player_named do |expected|
+  match do |actual|
+    actual.is_a?(Tournakit::Tournament::Player) && (actual.name == expected)
+  end
+  description do
+    "a player named '#{expected}'"
+  end
+end

@@ -130,7 +130,7 @@ describe Tournakit::Tournament do
 
 		describe "#players" do
 			it "contains the players on that team" do
-				expect(event.team("Minnesota A").players).to include("Andrew Hart")
+				expect(event.team("Minnesota A").players).to include a_player_named("Andrew Hart")
 			end
 		end
 	end
