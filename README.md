@@ -1,5 +1,7 @@
 # Tournakit
 
+*TOURNAKIT IS RAPIDLY CHANGING - Contact cdcarter for details on anything in the ecosystem. YARD docstrings should be up to date, and all specs are passing, so check them for things. The scripts are always kept up to date as well.*
+
 `Tournakit` is format for describing results of mACF quizbowl games, as well as the reference implementation in Ruby. As an added bonus it comes with a parser for Lily Chen's wonderful [Excel scoresheets][1].
 
 A `Game` is pretty accurately described in [schema.json][2]. 
