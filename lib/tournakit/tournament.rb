@@ -5,13 +5,16 @@ module Tournakit
 
 		# Team is only useful in the context of a +Tournament+
 		Team = Struct.new(:wins,:losses,:ties,:points,:points_against,:tens,:powers,:interrupts,:tossups_heard,
-											:bonuses_heard,:bonus_points,:name,:gp,:pct,:ppg,:papg,:mrg,:pptuh,:ppi,:gpi,:ppb)
+											:bonuses_heard,:bonus_points,:name,:gp,:pct,:ppg,:papg,:mrg,:pptuh,:ppi,:gpi,:ppb, :players)
 
 		# the +Tournament+ version of teams provides statistics and +team_id+s
 		# @return [Array<Team>] the teams in this tournament, with statistics and standings
 		def teams
 			@teams ||= @rounds.map(&:teams).flatten.uniq.sort.map do |team|
 				t = Team.new
+
+				t.players = self.players(team)
+
 				t.name = team
 				# these are the accumulator variables, the rest of the stats will be calculated
 				t.wins = 0
@@ -64,113 +67,12 @@ module Tournakit
 			return @teams
 		end
 
+
+		# Get the stats for a single team.
+		# @param team [String] the name of the team
+		# @return [Team] the stats for that team
 		def team(team)
 			teams.find{|t| t.name == team}
-		end
-
-		# @param team [String] the name of the team you want info for
-		# @return [Integer] the number of games the team won
-		def wins(team)
-			teams.find{|t|t.name==team}.wins
-		end
-
-		# @param (see #wins)
-		# @return [Integer] number of games the team lost
-		def losses(team)
-			teams.find{|t|t.name==team}.losses
-		end
-
-		# @param (see #wins)
-		# @return [Integer] number of games the team was in that ended in a tie
-		def ties(team)
-			teams.find{|t|t.name==team}.ties
-		end
-
-		# @param (see #wins)
-		# @return [Float] that team's win percentage
-		def pct(team)
-			teams.find{|t|t.name==team}.pct
-		end
-
-		# @param (see #wins)
-		# @return [Integer] the number of ten point tossups earned
-		def tens(team)
-			teams.find{|t|t.name==team}.tens
-		end
-
-		# @param (see #wins)
-		# @return [Integer] the number of poweers earned
-		def powers(team)
-			teams.find{|t|t.name==team}.powers
-		end
-
-		# @param (see #wins)
-		# @return [Integer] the number of interrupts penalized against that team
-		def interrupts(team)
-			teams.find{|t|t.name==team}.interrupts
-		end
-
-		# @param (see #wins)
-		# @return [Integer] the number of tossups heard over the tournament
-		def tossups_heard(team)
-			teams.find{|t|t.name==team}.tossups_heard
-		end
-
-		# @param (see #wins)
-		# @return [Float] the win margin of the team
-		def mrg(team)
-			teams.find{|t|t.name==team}.mrg
-		end
-
-		# @param (see #wins)
-		# @return [Float] the average number of points scored against the team
-		def papg(team)
-			teams.find{|t|t.name==team}.papg
-		end
-
-		# @param (see #wins)
-		# @return [Float] the average number of points scored by the team
-		def ppg(team)
-			teams.find{|t|t.name==team}.ppg
-		end
-
-		# @param (see #wins)
-		# @return [Float] the number of points scored per tossup heard, over the course of the tournament
-		def pptuh(team)
-			teams.find{|t|t.name==team}.pptuh
-		end
-
-		# P/I is the ratio of powers to interrups
-		# @param (see #wins)
-		# @return [Float] the ratio of powers to interrupts
-		def ppi(team)
-			teams.find{|t|t.name==team}.ppi
-		end
-
-		# G/I or Gets per Interrupt is the ratio of powers plus the number of regular tossups answered to the number of interrupts penalized
-		# @param (see #wins)
-		# @return [Float] the G/I ratio
-		def gpi(team)
-			teams.find{|t|t.name==team}.gpi
-		end
-
-		# @param (see #wins)
-		# @return [Integer] the number of points scored on bonuses over the course of the tournament
-		def bonus_points(team)
-			teams.find{|t|t.name==team}.bonus_points
-		end
-
-		# @param (see #wins)
-		# @return [Integer] the number of bonus questions heard over the tournament
-		def bonuses_heard(team)
-			teams.find{|t|t.name==team}.bonuses_heard
-		end
-
-		# PPB, also known as points per bonus, or bonus conversion, is the number of bonus points earned per bonus heard. 30.0 is a perfect score.
-		# @param (see #wins)
-		# @return [Float] the points per bonus for the team over the tournament
-		def ppb(team)
-			teams.find{|t|t.name==team}.ppb
 		end
 	end
 

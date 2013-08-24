@@ -127,6 +127,12 @@ describe Tournakit::Tournament do
 				expect(event.team("Illinois A").mrg).to be_within(0.1).of(33.3)
 			end
 		end
+
+		describe "#players" do
+			it "contains the players on that team" do
+				expect(event.team("Minnesota A").players).to include("Andrew Hart")
+			end
+		end
 	end
 
 	describe "#teams" do
