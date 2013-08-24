@@ -8,7 +8,7 @@ module Tournakit
 											:bonuses_heard,:bonus_points,:name,:gp,:pct)
 
 		# the +Tournament+ version of teams provides statistics and +team_id+s
-		# @return [Array<Team>]
+		# @return [Array<Team>] the teams in this tournament, with statistics and standings
 		def teams
 			@teams ||= @rounds.map(&:teams).flatten.uniq.sort.map do |team|
 				t = Team.new
@@ -41,16 +41,26 @@ module Tournakit
 			return @teams
 		end
 
+		# @param team [String] the name of the team you want info for
+		# @return [Integer] the number of games the team won
 		def wins(team)
 			teams.find{|t|t.name==team}.wins
 		end
 
+		# @param team [String] the name of the team you want info for
+		# @return [Integer] number of games the team lost
 		def losses(team)
 			teams.find{|t|t.name==team}.losses
 		end
+
+		# @param team [String] the name of the team you want info for
+		# @return [Integer] number of games the team was in that ended in a tie
 		def ties(team)
 			teams.find{|t|t.name==team}.ties
 		end
+
+		# @param team [String] the name of the team you want info for
+		# @return [Integer] that team's win percentage
 		def pct(team)
 			teams.find{|t|t.name==team}.pct
 		end
