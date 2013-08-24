@@ -55,34 +55,44 @@ module Tournakit
 			teams.find{|t|t.name==team}.wins
 		end
 
-		# @param team [String] the name of the team you want info for
+		# @param (see #wins)
 		# @return [Integer] number of games the team lost
 		def losses(team)
 			teams.find{|t|t.name==team}.losses
 		end
 
-		# @param team [String] the name of the team you want info for
+		# @param (see #wins)
 		# @return [Integer] number of games the team was in that ended in a tie
 		def ties(team)
 			teams.find{|t|t.name==team}.ties
 		end
 
-		# @param team [String] the name of the team you want info for
+		# @param (see #wins)
 		# @return [Integer] that team's win percentage
 		def pct(team)
 			teams.find{|t|t.name==team}.pct
 		end
 
+		# @param (see #wins)
+		# @return [Integer] the number of ten point tossups earned
 		def tens(team)
 			teams.find{|t|t.name==team}.tens
 		end
 
+		# @param (see #wins)
+		# @return [Integer] the number of poweers earned
 		def powers(team)
 			teams.find{|t|t.name==team}.powers
 		end
+
+		# @param (see #wins)
+		# @return [Integer] the number of interrupts penalized against that team
 		def interrupts(team)
 			teams.find{|t|t.name==team}.interrupts
 		end
+
+		# @param (see #wins)
+		# @return [Integer] the number of tossups heard over the tournament
 		def tossups_heard(team)
 			teams.find{|t|t.name==team}.tossups_heard
 		end
