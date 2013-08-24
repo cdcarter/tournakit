@@ -11,7 +11,7 @@ describe Tournakit::Tournament do
 
 	describe "#team" do
 		it "selects a team record" do
-			expect(event.team("Chicago A")).to be_instance_of Tournakit::Tournament::team
+			expect(event.team("Chicago A")).to be_instance_of Tournakit::Tournament::Team
 			expect(event.team("Chicago A").pct).to be_within(0.1).of(1.0)
 		end
 
