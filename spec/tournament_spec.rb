@@ -9,6 +9,17 @@ describe Tournakit::Tournament do
 		end
 	end
 
+	describe "#team" do
+		it "selects a team record" do
+			expect(event.team("Chicago A")).to be_instance_of Tournakit::Tournament::team
+			expect(event.team("Chicago A").pct).to be_within(0.1).of(1.0)
+		end
+
+		it "returns nil when not found" do
+			expect(event.team("Beer")).to be_nil
+		end
+	end
+
 	describe "standings methods" do
 		describe "#wins" do
 			it "reflects how many games the given team has won" do
