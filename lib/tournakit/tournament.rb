@@ -82,10 +82,18 @@ module Tournakit
 		#   @return [Float] the average number of tossup points scored per game by that player
 		end
 
-		# @!attribute [r] teams
+
+		def initialize(*args)
+			super(*args)
+			calculate_stats
+		end
+
 		# @return [Array<Team>] the teams in this tournament, with statistics and standings 
-		def teams
-			@teams ||= @rounds.map(&:teams).flatten.uniq.sort.map do |team|
+		attr_reader :teams
+
+		# Calculate the stats for the tournament
+		def calculate_stats
+			@teams = @rounds.map(&:teams).flatten.uniq.sort.map do |team|
 				t = Team.new
 
 				t.players = self.players(team).map {|p| Player.new(p)}
@@ -140,7 +148,6 @@ module Tournakit
 				t
 			end
 
-			return @teams
 		end
 
 
