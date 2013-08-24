@@ -84,6 +84,26 @@ describe Tournakit::Tournament do
 		end
 	end
 
+	describe "bonus methods" do
+		describe "#bonus_points" do
+			it "should contain the total bpts" do
+				expect(event.bonus_points "Chicago A").to eq 770
+			end
+		end
+
+		describe "#bonuses_heard" do
+			it "should contain the # of bonuses heard" do
+				expect(event.bonuses_heard "Chicago A").to eq 35
+			end
+		end
+
+		describe "#ppb" do
+			it "should contain the bonus conversion" do
+				expect(event.ppb "Chicago A").to be_within(0.1).of(22.0)
+			end
+		end
+	end
+
 	describe "game point methods" do
 		describe "#ppg" do
 			it "calculates ppg" do
